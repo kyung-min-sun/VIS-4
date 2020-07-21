@@ -1,0 +1,680 @@
+<html>
+	<head>
+		<title>VIS-4</title>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<style>
+			body { margin: 0; background-color: black;
+						color: white; font-family: "Helvetica"; }
+			canvas { display: block; }
+
+
+			/* that w3schools page */
+			.frame_slider, .color_slider {
+				-webkit-appearance: none;
+				width:100%;
+				height:15px;
+				background: #d3d3d3;
+				outline: none;
+				opacity: .7;
+				-webkit-transition: .2s;
+				transition: opacity .2s;
+			}
+
+			.frame_slider::-webkit-slider-thumb,
+			.color_slider::-webkit-slider-thumb {
+			  -webkit-appearance: none;
+			  appearance: none;
+			  width: 3px;
+			  height: 25px;
+			  background: #FFFFFF;
+			  cursor: pointer;
+			}
+
+			.input {
+				margin-top:20px;
+				margin-bottom:20px;
+			}
+
+			.output {
+				position:relative;
+				display:block;
+				margin-top:20px;
+				margin-bottom:20px;
+				width:100%;
+				min-height:15px;
+			}
+
+			.title {
+				text-align:center;
+				margin:10px;
+			}
+
+			.hidden {
+				display:none;
+			}
+
+			.color_slider {
+				float:left;
+				margin:0px;
+				min-height:10px;
+				border-radius:0%;
+				width:50%;
+				position:relative;
+				margin-bottom:20px;
+				visibility:hidden;
+			}
+
+			.color_slider::-webkit-slider-thumb {
+				width:3px;
+				border-radius:0%;
+				background: #FFFFFF;
+				visibility:visible;
+			}
+
+			.bubble {
+				position:relative;
+				text-align: center;
+				width: 50px;
+			}
+
+			.gradient {
+				background: linear-gradient(to right, blue, lime, red);
+			}
+
+			#scene {
+				height:50%;
+				margin-bottom:2.5%;
+			}
+
+			.input_header {
+				text-align:center;
+				margin-bottom:0px;
+			}
+
+			.slider_inputs {
+				height:50%;
+				padding-left: 5%;
+				padding-right: 5%;
+			}
+
+			#main_frame {
+				height:100%;
+				float:left;
+				border: 1px solid;
+			}
+
+			.side-frame {
+				height:100%;
+				float:left;
+				border: 1px solid;
+			}
+
+			.margin {
+				margin: 2.5%;
+			}
+
+			.control_display {
+				display: none;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="title">
+			<h1>VIS-4</h1>
+		</div>
+		<div class="side-frame">
+
+			<div class="file_display margin">
+				<div class="input_header">
+					<h2>Input Files</h2>
+				</div>
+				<input type="file" id="input_files" multiple>
+			</div>
+
+			<div class="control_display margin">
+
+				<div class="text_inputs">
+
+					<div class="video">
+						<div id="fps_container">
+							<label for="input_fps">Frames Per Second: </label>
+							<input type="text" id="input_fps" class="bubble">
+						</div>
+						<div class="input">
+							<button type="button" name="fps" id="play_button">Play</button>
+							<button type="button" name="fps" id="pause_button">Pause</button>
+							<button type="button" name="fps" id="reverse_button">Reverse</button>
+						</div>
+
+						<div class="input">
+							<label for="stamp_input">Time Files: </label>
+							<input type="file" id="stamp_input">
+						</div>
+
+						<div id="time_container" class="hidden">
+							<div class="input">
+								<label for="time_input">Time: </label>
+								<input type="text" id="time_input" class="bubble">
+							</div>
+
+							<div class="input">
+								<button type="button" name="time" id="time_start">Play</button>
+								<button type="button" name="time" id="time_stop">Pause</button>
+								<button type="button" name="time" id="time_reverse">Reverse</button>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="static">
+						<div class="input">
+							<button type="button" id="input_static_update">Update</button>
+						</div>
+					</div>
+
+					<div class="input">
+						<label for="input_data_category">Data Choice: </label>
+						<select name="data_category" id="input_data_category">
+							<option value="Temp">Raw Temperature</option>
+							<option value="Max">Maxima</option>
+							<option value="Min">Minima</option>
+							<option value="Mean">Mean</option>
+							<option value="Range">Range</option>
+							<option value="Var">Standard Deviation</option>
+						</select>
+					</div>
+
+
+					<div class="input">
+						<label for="input_color">Coloring Scheme: </label>
+						<select name="colors" id="input_color">
+							<option value="Blue Green Red">Blue Green Red</option>
+							<option value="Yellow Orange Red">Yellow Orange Red</option>
+							<option value="Yellow Green Blue">Yellow Green Blue</option>
+							<option value="Grey">Grey</option>
+							<option value="Purple Red">Purple Red</option>
+							<option value="Custom">Custom</option>
+						</select>
+					</div>
+
+					<div class="input">
+						<label for="gradient_1">Color 1:</label>
+						<input type="text" id="gradient_1" class="bubble"><br>
+						<label for="gradient_2">Color 2:</label>
+						<input type="text" id="gradient_2" class="bubble"><br>
+						<label for="gradient_3">Color 3:</label>
+						<input type="text" id="gradient_3" class="bubble"><br>
+					</div>
+
+					<div class="input">
+						<label for="start_rotate_button">Rotation: </label>
+						<button type="button" id="start_rotate_button">Start</button>
+						<button type="button" id="stop_rotate_button">Stop</button>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+		<div id="main_frame">
+			<div id="scene">
+
+			</div>
+
+			<div class="control_display slider_inputs">
+				<div class="video">
+					<div class="input_header">
+						<h3>Frame</h3>
+					</div>
+					<div class="input">
+						<input type="text" id="input_frame_value" class="bubble">
+					</div>
+					<div class="input">
+						<input type="range" id="input_frame_range" class="frame_slider" value="50" min="0" max="100">
+					</div>
+				</div>
+
+
+				<div id="pt_size_container" class="input hidden">
+					<div class="input_header">
+						<h3>Point Size</h3>
+					</div>
+					<div class="input">
+						<input type="text" id="pt_size_txt" class="bubble">
+					</div>
+					<div class="input">
+						<input type="range" id="pt_size_slider" class="frame_slider" step=".1">
+					</div>
+				</div>
+
+				<div id="color_sliders">
+					<div class="input_header">
+						<h3>Color</h3>
+					</div>
+					<div class="input">
+						<input type="text" id="left_bubble" class="bubble">
+					</div>
+					<div class="output gradient" id="sliders">
+						<input type="range" class="color_slider" id="left_slider" min="0" max="50">
+						<input type="range" class="color_slider" id="right_slider" min="51" max="100">
+					</div>
+					<div class="input">
+						<input type="text" id="right_bubble" class="bubble">
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="side-frame">
+
+			<div class="control_display margin">
+				Plane Parameters:<br>
+				<label for="theta">&theta;:</label>
+				<input type="text" id="theta_form" class="bubble" value="0">
+				<input type="range" id="theta_slider" value="0" min="0" max="360"><br>
+				<label for="phi">&phi;:</label>
+				<input type="text" id="phi_form" class="bubble" value="0">
+				<input type="range" id="phi_slider" value="0" min="0" max="180"><br>
+				<label for="x">X:</label>
+				<input type="text" id="x_form" class="bubble" value="0">
+				<input type="range" id="x_slider" step=".01"><br>
+				<label for="y">Y:</label>
+				<input type="text" id="y_form" class="bubble" value="0">
+				<input type="range" id="y_slider" step=".01"><br>
+				<label for="z">Z:</label>
+				<input type="text" id="z_form" class="bubble" value="0">
+				<input type="range" id="z_slider" step=".01"><br>
+				<label for="thres">Max Dist:</label>
+				<input type="text" id="thres_form" class="bubble">
+				<input type="range" id="thres_slider" step=".01"><br>
+				<label for="hide_button">Show Plane:</label>
+				<input type="checkbox" id="hide_button" value="hide">
+
+				<div class="output">
+					<label for="output_file">Output File: </label>
+					<button type="button" id="output_file_button" name="output_file">Generate Output File</button>
+					<a href="" id="output_file_link" class="hidden" target="_blank">Download Output File</a>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+	 <!-- https://stackoverflow.com/questions/12337660/three-js-adjusting-opacity-of-individual-particles -->
+		<script type="x-shader/x-vertex" id="vertexshader">
+
+    attribute float alpha;
+		attribute vec3 color;
+		uniform float pt_size;
+
+    varying float vAlpha;
+		varying vec3 vColor;
+
+    void main() {
+
+        vAlpha = alpha;
+				vColor = color;
+
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+				gl_PointSize = pt_size;
+
+        gl_Position = projectionMatrix * mvPosition;
+
+
+    }
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+
+	    varying vec3 vColor;
+
+	    varying float vAlpha;
+
+	    void main() {
+
+	        gl_FragColor = vec4( vColor, vAlpha );
+
+	    }
+
+	</script>
+
+    <script type="module" defer>
+
+		import {ControlHandler, FileHandler} from './update_handler.js';
+		import {GradientController, ColorController, PointController, LoopController,
+		        DataCategoryController, SliderController, RotationController,
+		        TimeStampController, PlaneController} from './controller.js';
+		import {OrbitControls} from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+		import * as THREE from './node_modules/three/build/three.module.js';
+
+    let gradients = [gradient_1, gradient_2, gradient_3];
+
+		let plane_forms = {
+			theta : theta_form,
+			phi : phi_form,
+			x : x_form,
+			y : y_form,
+			z : z_form,
+			thres: thres_form
+		};
+
+		let plane_sliders = {
+			theta : theta_slider,
+			phi : phi_slider,
+			x : x_slider,
+			y : y_slider,
+			z : z_slider,
+			thres: thres_slider
+		};
+
+
+		let control_displays = document.getElementsByClassName('control_display');
+		let file_displays = document.getElementsByClassName('file_display');
+		let video_display = document.getElementsByClassName('video');
+		let picture_display = document.getElementsByClassName('static');
+
+		// https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
+		// lines 389-396, 417-425
+
+		// set up scene with:
+
+		let scene = new THREE.Scene();
+	  scene.background = new THREE.Color(0x000000);
+
+		// 1. camera
+
+	  let camera = new THREE.PerspectiveCamera( 50,
+	  	window.innerWidth / window.innerHeight , 0.1, 1000 );
+	  camera.position.z = 100;
+
+		// 2. light
+
+	  let ambient_light = new THREE.AmbientLight( 0xffffff );
+	  scene.add( ambient_light );
+
+		// 3. plane
+
+	  let plane_geometry = new THREE.BufferGeometry();
+	  plane_geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(18), 3));
+
+	  let plane_material = new THREE.MeshPhongMaterial(
+	    {color: 0xFFFFFF,
+	     side: THREE.DoubleSide,
+	     opacity: 1,
+	     transparent: false,
+	     depthWrite : false,
+	   }
+	 );
+
+	  let plane = new THREE.Mesh( plane_geometry, plane_material );
+	  scene.add( plane );
+
+		// initialize renderer
+
+	  let renderer = new THREE.WebGLRenderer();
+	  renderer.setSize( window.innerWidth / 2 - 2, window.innerHeight / 2 );
+
+	  document.getElementById('scene').appendChild( renderer.domElement );
+
+		// enable user-controlled orbiting
+
+	  let orbit_controls = new OrbitControls( camera, renderer.domElement );
+
+		// stores frames and coordinates on each vertex
+
+	  let vertex_data = new Object();
+
+		// handles user file input
+
+	  let file_handler = new FileHandler(scene, vertex_data, input_files,
+	                                     output_file_link, output_file_button,
+	                                     pt_size_container);
+
+		// handles user controls (color, point size, playback, etc.)
+
+	  let control_handler = new ControlHandler();
+
+	  let color_control = null;
+	  let point_control = null;
+	  let loop_control = null;
+	  let data_control = null;
+	  let slider_control = null;
+	  let gradient_control = null;
+	  let rotate_control = null;
+	  let time_control = null;
+	  let plane_control = null;
+
+	  let animate = function () {
+
+	    requestAnimationFrame(animate);
+
+	    orbit_controls.update();
+
+			// loads files to the file handler
+	    if(!file_handler.all_loaded() && !control_handler.all_loaded()) {
+	      file_handler.load_files();
+	    }
+
+			// sets up all relevant controls afterward
+	    else if(file_handler.all_loaded() && !control_handler.all_loaded()) {
+
+	      plane_control = new PlaneController(plane_forms, plane_sliders,
+	                                          file_handler.get_alpha_attribute(),
+	                                          file_handler.get_position_attribute(),
+	                                          file_handler.get_bounding_box(),
+	                                          file_handler.get_bounding_sphere(),
+	                                          plane_geometry,
+	                                          plane_material,
+	                                          control_handler,
+	                                          hide_button);
+
+	      color_control = new ColorController(input_frame_range, input_frame_value,
+	                                          file_handler.get_color_attribute(),
+	                                          file_handler.get_alpha_attribute(),
+	                                          vertex_data.frames,
+	                                          vertex_data.frames_per_pt,
+	                                          control_handler);
+
+	      loop_control = new LoopController(input_fps, input_frame_range, input_frame_value,
+	                                        play_button, reverse_button, pause_button,
+	                                        control_handler);
+
+	      data_control = new DataCategoryController(vertex_data, input_data_category,
+	                                                video_display, picture_display,
+	                                                control_handler);
+
+	      slider_control = new SliderController(sliders, left_slider, right_slider,
+	                                            left_bubble, right_bubble,
+	                                            control_handler);
+
+	      gradient_control = new GradientController(input_color, gradients, control_handler);
+
+	      rotate_control = new RotationController(file_handler.get_object_rotation(),
+	                                              start_rotate_button, stop_rotate_button, control_handler);
+
+	      time_control = new TimeStampController(time_container,
+	                                             stamp_input, time_input, input_frame_range,
+	                                             time_start, time_stop, time_reverse,
+	                                             control_handler);
+
+	      if(!file_handler.is_stl()) {
+	        point_control = new PointController(file_handler.get_point_size(),
+	                                            pt_size_txt, pt_size_slider,
+	                                            control_handler);
+	      }
+
+				// displays the controls instead of file inputs
+
+	      for(const control_display of control_displays) {
+	        control_display.style.display = 'block';
+	      }
+
+	      for(const file_display of file_displays) {
+	        file_display.style.display = 'none';
+	      }
+
+	    }
+
+			// keeps checking for updates to user inputs
+
+	    else {
+	      control_handler.update_controls();
+	    }
+
+	    renderer.render( scene, camera );
+
+	  }
+
+		// resize renderer when window changes
+	  window.addEventListener('resize', resize_window);
+
+		// booleans to check if user has expanded to left or right
+	  let left_shift = false;
+	  let right_shift = false;
+
+		// previous mouse position
+	  let prev_pos = null;
+
+		let side_frames = document.getElementsByClassName('side-frame');
+	  let left_frame = side_frames[0];
+	  let right_frame = side_frames[1];
+		let curr_width = window.innerWidth;
+
+		// divide into 3 parts, subtracting 1 pixel border on each side
+	  left_frame.style.width = `${25 - (100*2/curr_width)}%`;
+	  right_frame.style.width = `${25 - (100*2/curr_width)}%`;
+	  main_frame.style.width = `${50 - (100*2/curr_width)}%`;
+
+	  window.addEventListener('mousedown', e => {
+			// x-distance in percent
+	    const pct_dist = e.pageX/window.innerWidth*100;
+
+	    const left_width = parseFloat(left_frame.style.width);
+	    const main_width = parseFloat(main_frame.style.width);
+
+	    const lower_bound = left_width;
+	    const upper_bound = main_width + left_width;
+	    const err = 1;
+
+			// left shift if beyond/behind left edge by 1%
+	    left_shift = (pct_dist < lower_bound + err && pct_dist > lower_bound - err);
+
+			// right shift if beyond/behind right edge by 1%
+			right_shift = (pct_dist < upper_bound + err && pct_dist > upper_bound - err);
+
+	  });
+
+	  window.addEventListener('mousemove', e => {
+
+			// no shift or file loaded, then don't alter the frames
+	    if(!left_shift && !right_shift || color_control == null ) { return; }
+
+	    const pct_dist = e.pageX/window.innerWidth*100;
+
+	    const left_width = parseFloat(left_frame.style.width);
+	    const main_width = parseFloat(main_frame.style.width);
+	    const right_width = parseFloat(right_frame.style.width);
+
+			// distance to left frame
+	    const left_diff = pct_dist - left_width;
+			// distance to right frame
+	    const right_diff = pct_dist - (main_width + left_width);
+
+			// if the main frame gets below 1% width after a change, then return
+	    if((left_shift && left_diff > 0 && main_width - left_diff <= 1) ||
+	      (right_shift && right_diff < 0 && main_width + right_diff <= 1))
+	      { return; }
+
+			// shift the left or right frame by the appropriate distance
+
+	    if(left_shift && left_width + left_diff >= 1) {
+	      left_frame.style.width = `${left_width + left_diff}%`;
+	      main_frame.style.width = `${main_width - left_diff}%`;
+	      resize_render_window();
+	    }
+
+	    else if(right_shift && right_width - right_diff >= 1) {
+	      right_frame.style.width = `${right_width - right_diff}%`;
+	      main_frame.style.width = `${main_width + right_diff}%`;
+	      resize_render_window();
+	    }
+
+			// if below 75 px, then don't display the controls on that side
+
+	    if(left_width*window.innerWidth/100 <= 75) {
+	      control_displays[0].style.display = 'none';
+	    }
+	    else if(left_width*window.innerWidth/100 > 75) {
+	      control_displays[0].style.display = 'block';
+	    }
+
+	    if(right_width*window.innerWidth/100 <= 75) {
+	      control_displays[2].style.display = 'none';
+	    }
+	    else if(right_width*window.innerWidth/100 > 75) {
+	      control_displays[2].style.display = 'block';
+	    }
+
+	  });
+
+	  window.addEventListener('mouseup', e => {
+
+			// stop shifting when the mouse moves up
+
+	    left_shift = false;
+	    right_shift = false;
+
+	  });
+
+
+
+	  animate();
+
+
+		function resize_window () {
+			left_frame.style.width = `${parseFloat(left_frame.style.width)
+				 													+ (100*2/curr_width)
+																	- (100*2/window.innerWidth)}%`;
+		  right_frame.style.width = `${parseFloat(right_frame.style.width)
+				 													+ (100*2/curr_width)
+																	- (100*2/window.innerWidth)}%`;
+		  main_frame.style.width = `${parseFloat(main_frame.style.width)
+				 													+ (100*2/curr_width)
+																	- (100*2/window.innerWidth)}%`;
+			curr_width = window.innerWidth;
+
+			resize_render_window();
+		}
+
+	  function resize_render_window() {
+			// convert width from percent to pixels
+
+	    let width = parseFloat(main_frame.style.width)/100*window.innerWidth;
+
+			// height is always 1/2 of the window frame
+	    let height = window.innerHeight/2;
+
+	    camera.aspect = width / height;
+	    camera.updateProjectionMatrix();
+	    renderer.setSize( width , height);
+	    control_handler.adjust_extrema();
+
+	  }
+
+
+    </script>
+	</body>
+</html>
