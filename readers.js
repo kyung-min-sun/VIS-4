@@ -1,5 +1,5 @@
-import {STLLoader} from './node_modules/three/examples/jsm/loaders/STLLoader.js';
-import * as THREE from './node_modules/three/build/three.module.js';
+import {STLLoader} from './STLLoader.js';
+import * as THREE from './three.module.js';
 
 // converts UTF-8 code to char
 function code_to_char (utf_code) {
