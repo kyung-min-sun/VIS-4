@@ -115,41 +115,62 @@ export class FileHandler {
 
     this.load_files = function () {
 
-      for(const file of file_input.files) {
-        // check if valid file or if we've already processed it
-        if(!file || processed.has(file)) {continue;}
+      let geo_files = [];
+      let frm_files = [];
 
-        // obtain extensions
+      for(const file of file_input.files) {
+
+        if(!file || processed.has(file)) { continue; }
+
         let exts = get_exts(file.name);
 
-        const no_change = processed.size;
-
         for(const ext of exts) {
-          // reading geometry file:
-          if(temp_reader.parser == null && geo_exts.includes(ext)) {
-            // check if it's an stl or pt cloud file
-            adjust_stl(ext);
-            // send file through geometry parser
-            geo_reader.parser.readAsArrayBuffer(file);
-            // add to processed
-            processed.add(file);
 
-            return;
-
+          if(geo_exts.includes(ext)) {
+            geo_files.push(file);
+            break;
           }
-          // reading temperature file:
-          else if(temp_reader.parser != null && temp_exts.includes(ext)) {
-            // send file through temperature parser
-            temp_reader.parser.readAsArrayBuffer(file);
-            // add to processed
-            processed.add(file);
 
+          else if(frm_exts.includes(ext)) {
+            frm_files.push(file);
+            break;
           }
+
+
         }
 
-        if(no_change == processed.size) {alert('Supported Extensions: pt, frm, stl');}
-        else if(temp_reader.parser == null) {alert('Load Geometry File First');}
+      }
 
+      if(!processed.size && frm_files.length && !geo_files.length) {
+        file_input.files = [];
+        return alert('Load Geometry File First');
+      }
+
+      for(const file of geo_files) {
+        // check if valid file or if we've already processed it
+        if(temp_reader.parser != null) { break; }
+
+        // adjust display based on stl or pt cloud file
+        if(get_exts(file.name).includes('stl')) { adjust_stl('stl'); }
+
+        else { adjust_stl('pt'); }
+
+        // send file through geometry parser
+        geo_reader.parser.readAsArrayBuffer(file);
+
+        // add to processed
+        processed.add(file);
+
+      }
+
+      for(const file of frm_files) {
+
+        if(temp_reader.parser == null) { break; }
+
+        // send file through temperature parser
+        temp_reader.parser.readAsArrayBuffer(file);
+
+        // add to processed
         processed.add(file);
 
       }
