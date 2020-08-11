@@ -33,8 +33,12 @@
 			}
 
 			.input {
-				margin-top:20px;
-				margin-bottom:20px;
+				margin-top:10px;
+				margin-bottom:0px;
+			}
+
+			.side-frame .input {
+				margin-bottom:0px;
 			}
 
 			.output {
@@ -101,12 +105,14 @@
 
 			#main_frame {
 				height:100%;
+				min-height:800px;
 				float:left;
 				border: 1px solid;
 			}
 
 			.side-frame {
 				height:100%;
+				min-height:800px;
 				float:left;
 				border: 1px solid;
 			}
@@ -139,11 +145,12 @@
 				<div class="text_inputs">
 
 					<div class="video">
-						<div id="fps_container">
-							<label for="input_fps">Frames Per Second: </label>
-							<input type="text" id="input_fps" class="bubble">
+						<div class="side_header">
+							<h2>Video Controls</h2>
 						</div>
-						<div class="input">
+						<div id="fps_container" class="input">
+							<label for="input_fps">FPS: </label>
+							<input type="text" id="input_fps" class="bubble"><br>
 							<button type="button" name="fps" id="play_button">Play</button>
 							<button type="button" name="fps" id="pause_button">Pause</button>
 							<button type="button" name="fps" id="reverse_button">Reverse</button>
@@ -152,20 +159,13 @@
 						<div class="input">
 							<label for="stamp_input">Time Files: </label>
 							<input type="file" id="stamp_input">
-						</div>
-
-						<div id="time_container" class="hidden">
-							<div class="input">
+							<div id="time_container" class="hidden input">
 								<label for="time_input">Time: </label>
-								<input type="text" id="time_input" class="bubble">
-							</div>
-
-							<div class="input">
+								<input type="text" id="time_input" class="bubble"><br>
 								<button type="button" name="time" id="time_start">Play</button>
 								<button type="button" name="time" id="time_stop">Pause</button>
 								<button type="button" name="time" id="time_reverse">Reverse</button>
 							</div>
-
 						</div>
 
 					</div>
@@ -177,7 +177,10 @@
 					</div>
 
 					<div class="input">
-						<label for="input_data_category">Data Choice: </label>
+						<div class="side_header">
+							<h2>Data Selection</h2>
+						</div>
+						<label for="input_data_category">Central Tendency Measure: </label>
 						<select name="data_category" id="input_data_category">
 							<option value="Temp">Raw Temperature</option>
 							<option value="Max">Maxima</option>
@@ -190,7 +193,10 @@
 
 
 					<div class="input">
-						<label for="input_color">Coloring Scheme: </label>
+						<div class="side_header">
+							<h2>Coloring Scheme</h2>
+						</div>
+						<label for="input_color">Palette: </label>
 						<select name="colors" id="input_color">
 							<option value="Blue Green Red">Blue Green Red</option>
 							<option value="Yellow Orange Red">Yellow Orange Red</option>
@@ -198,19 +204,21 @@
 							<option value="Grey">Grey</option>
 							<option value="Purple Red">Purple Red</option>
 							<option value="Custom">Custom</option>
-						</select>
-					</div>
+						</select><br>
 
-					<div class="input">
 						<label for="gradient_1">Color 1:</label>
 						<input type="text" id="gradient_1" class="bubble"><br>
 						<label for="gradient_2">Color 2:</label>
 						<input type="text" id="gradient_2" class="bubble"><br>
 						<label for="gradient_3">Color 3:</label>
 						<input type="text" id="gradient_3" class="bubble"><br>
+
 					</div>
 
 					<div class="input">
+						<div class="side_header">
+							<h2>Rotation</h2>
+						</div>
 						<label for="start_rotate_button">Rotation: </label>
 						<button type="button" id="start_rotate_button">Start</button>
 						<button type="button" id="stop_rotate_button">Stop</button>
@@ -276,38 +284,42 @@
 		<div class="side-frame">
 
 			<div class="control_display margin">
-				Plane Parameters:<br>
-				<label for="theta">&theta;:</label>
-				<input type="text" id="theta_form" class="bubble" value="0">
-				<input type="range" id="theta_slider" value="0" min="0" max="360"><br>
-				<label for="phi">&phi;:</label>
-				<input type="text" id="phi_form" class="bubble" value="0">
-				<input type="range" id="phi_slider" value="0" min="0" max="180"><br>
-				<label for="x">X:</label>
-				<input type="text" id="x_form" class="bubble" value="0">
-				<input type="range" id="x_slider" step=".01"><br>
-				<label for="y">Y:</label>
-				<input type="text" id="y_form" class="bubble" value="0">
-				<input type="range" id="y_slider" step=".01"><br>
-				<label for="z">Z:</label>
-				<input type="text" id="z_form" class="bubble" value="0">
-				<input type="range" id="z_slider" step=".01"><br>
-				<label for="thres">Max Dist:</label>
-				<input type="text" id="thres_form" class="bubble">
-				<input type="range" id="thres_slider" step=".01"><br>
-				<label for="hide_button">Show Plane:</label>
-				<input type="checkbox" id="hide_button" value="hide">
+				<div class="input">
+					<div class="side_header">
+						<h2>Layer Selection</h2>
+					</div>
+					Plane Parameters:<br>
+					<label for="theta">&theta;:</label>
+					<input type="text" id="theta_form" class="bubble" value="0">
+					<input type="range" id="theta_slider" value="0" min="0" max="360"><br>
+					<label for="phi">&phi;:</label>
+					<input type="text" id="phi_form" class="bubble" value="0">
+					<input type="range" id="phi_slider" value="0" min="0" max="180"><br>
+					<label for="x">X:</label>
+					<input type="text" id="x_form" class="bubble" value="0">
+					<input type="range" id="x_slider" step=".01"><br>
+					<label for="y">Y:</label>
+					<input type="text" id="y_form" class="bubble" value="0">
+					<input type="range" id="y_slider" step=".01"><br>
+					<label for="z">Z:</label>
+					<input type="text" id="z_form" class="bubble" value="0">
+					<input type="range" id="z_slider" step=".01"><br>
+					<label for="thres">Max Dist:</label>
+					<input type="text" id="thres_form" class="bubble">
+					<input type="range" id="thres_slider" step=".01"><br>
+					<label for="hide_button">Show Plane:</label>
+					<input type="checkbox" id="hide_button" value="hide">
+				</div>
 
-				<div class="output">
-					<label for="output_file">Output File: </label>
+				<div class="input">
+					<div class="side_header">
+						<h2>Output File</h2>
+					</div>
 					<button type="button" id="output_file_button" name="output_file">Generate Output File</button>
 					<a href="" id="output_file_link" class="hidden" target="_blank">Download Output File</a>
 				</div>
 
 			</div>
-
-
-
 
 		</div>
 
@@ -386,6 +398,8 @@
 		let video_display = document.getElementsByClassName('video');
 		let picture_display = document.getElementsByClassName('static');
 
+
+
 		// https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
 		// lines 389-396, 417-425
 
@@ -410,11 +424,11 @@
 	  let plane_geometry = new THREE.BufferGeometry();
 	  plane_geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(18), 3));
 
-	  let plane_material = new THREE.MeshPhongMaterial(
-	    {color: 0xFFFFFF,
+	  let plane_material = new THREE.MeshBasicMaterial(
+	    {color: 0xffffff,
 	     side: THREE.DoubleSide,
-	     opacity: 1,
-	     transparent: false,
+	     opacity: 0,
+	     transparent: true,
 	     depthWrite : false,
 	   }
 	 );
@@ -425,7 +439,6 @@
 		// initialize renderer
 
 	  let renderer = new THREE.WebGLRenderer();
-	  renderer.setSize( window.innerWidth / 2 - 2, window.innerHeight / 2 );
 
 	  document.getElementById('scene').appendChild( renderer.domElement );
 
@@ -456,6 +469,7 @@
 	  let rotate_control = null;
 	  let time_control = null;
 	  let plane_control = null;
+
 
 	  let animate = function () {
 
@@ -614,17 +628,17 @@
 
 			// if below 75 px, then don't display the controls on that side
 
-	    if(left_width*window.innerWidth/100 <= 75) {
+	    if(left_width*window.innerWidth/100 <= 130) {
 	      control_displays[0].style.display = 'none';
 	    }
-	    else if(left_width*window.innerWidth/100 > 75) {
+	    else if(left_width*window.innerWidth/100 > 130) {
 	      control_displays[0].style.display = 'block';
 	    }
 
-	    if(right_width*window.innerWidth/100 <= 75) {
+	    if(right_width*window.innerWidth/100 <= 130) {
 	      control_displays[2].style.display = 'none';
 	    }
-	    else if(right_width*window.innerWidth/100 > 75) {
+	    else if(right_width*window.innerWidth/100 > 130) {
 	      control_displays[2].style.display = 'block';
 	    }
 
@@ -640,6 +654,7 @@
 	  });
 
 
+		resize_render_window();
 
 	  animate();
 
@@ -664,8 +679,8 @@
 
 	    let width = parseFloat(main_frame.style.width)/100*window.innerWidth;
 
-			// height is always 1/2 of the window frame
-	    let height = window.innerHeight/2;
+			// height is always 400 px or half of window frame (whichever is larger)
+	    let height = Math.max(400, window.innerHeight/2);
 
 	    camera.aspect = width / height;
 	    camera.updateProjectionMatrix();

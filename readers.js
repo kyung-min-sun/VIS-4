@@ -51,7 +51,7 @@ class PTLoader {
       // if it's empty, then return empty geometry
   		if(char_arr.length == 0) { return geometry; }
 
-      // the last entry --> pop
+      // if the last entry is empty, then pop
   		if(char_arr[char_arr.length - 1] == "") {char_arr.pop();}
 
       // initialize position attribute with this
