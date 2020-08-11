@@ -111,16 +111,20 @@ export class FileHandler {
 
     // extensiosn for geometry and temperature files
     let geo_exts = ['stl', 'pt'];
-    let temp_exts = ['frm'];
+    let frm_exts = ['frm'];
 
     this.load_files = function () {
 
       let geo_files = [];
       let frm_files = [];
 
+      const byte_to_gb = 1/(1024*1024*1024);
+
       for(const file of file_input.files) {
 
         if(!file || processed.has(file)) { continue; }
+
+        if(file.size*byte_to_gb > 1) { alert("File sizes over 1 GB may fail. Refresh page if not responsive after 1 minute."); }
 
         let exts = get_exts(file.name);
 
@@ -174,8 +178,6 @@ export class FileHandler {
         processed.add(file);
 
       }
-
-
 
     };
 

@@ -99,7 +99,7 @@ export class ColorController {
     frame_slider.max = frame_count - 1;
 
     // set bubble size (10 pixels per digit)
-    let max_num_width = 10*(frame_slider.max.length);
+    let max_num_width = 10*(frame_slider.max.length) + 2;
 
     // offset to center bubble at the frame slider tag
     let offset = (100*max_num_width/window.innerWidth);
@@ -135,6 +135,7 @@ export class ColorController {
       }
 
       // adjust the bubble position
+      offset = (100*max_num_width/window.innerWidth);
       frame_txt.style.left = `${1.25 + 100*(curr_frame/num_frames) - offset}%`;
 
       // reflect changes in frame
@@ -319,6 +320,7 @@ export class PointController {
         update_pt_size(new_size_slider);
       }
 
+      offset = 100*(max_num_width/window.innerWidth);
       pt_size_txt.style.left = `${1.25 + 100*point_size.value/10 - offset}%`;
 
     }
@@ -669,10 +671,14 @@ export class TimeStampController {
     let stamps = [];
     let loop = [];
 
+    const byte_to_gb = 1/(1024*1024*1024);
+
 
     this.check_update = function () {
       // read file input
       for(const file of stamp_input.files) {
+
+        if(file.size*byte_to_gb > 1) { alert("File sizes over 1 GB may fail. Refresh page if not responsive after 30 seconds."); }
 
         // check if file exists + already processed
         if(!file || processed.has(file)) {continue;}
@@ -860,7 +866,7 @@ export class SliderController {
 			left_slider.style.width = '50%';
 
       // 10 pixels per digit
-      let max_num_width = 10*(right_slider.max.length);
+      let max_num_width = 10*(right_slider.max.length) + 2;
 
       // if it's under 5% of the screen, then keep that pixel
 			if(100*(max_num_width/window.innerWidth) < 5) {
@@ -952,6 +958,10 @@ export class SliderController {
 
       left_slider.max = lower_max;
       right_slider.min = upper_min;
+
+      const min_width = 100*4/(left_slider.offsetWidth + right_slider.offsetWidth);
+      lower_width = Math.max(lower_width, min_width);
+      console.log(left_slider.offsetWidth);
 
       left_slider.style.width = `${lower_width}%`;
 		  right_slider.style.width = `${100 - lower_width}%`;
