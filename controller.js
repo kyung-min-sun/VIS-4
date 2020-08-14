@@ -99,7 +99,7 @@ export class ColorController {
     frame_slider.max = frame_count - 1;
 
     // set bubble size (10 pixels per digit)
-    let max_num_width = 10*(frame_slider.max.length) + 2;
+    let max_num_width = 12*(frame_slider.max.length) + 2;
 
     // offset to center bubble at the frame slider tag
     let offset = (100*max_num_width/window.innerWidth);
@@ -865,8 +865,8 @@ export class SliderController {
       right_slider.style.width = '50%';
 			left_slider.style.width = '50%';
 
-      // 10 pixels per digit
-      let max_num_width = 10*(right_slider.max.length) + 2;
+      // 12 pixels per digit
+      let max_num_width = 12*(right_slider.max.length) + 2;
 
       // if it's under 5% of the screen, then keep that pixel
 			if(100*(max_num_width/window.innerWidth) < 5) {
