@@ -48,6 +48,8 @@ class PTLoader {
         ++curr_pos;
      }
 
+     if(char_arr[char_arr.length - 1] == 0) {char_arr.push(0);}
+
       // if it's empty, then return empty geometry
   		if(char_arr.length == 0) { return geometry; }
 
