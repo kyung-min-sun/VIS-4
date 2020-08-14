@@ -412,7 +412,7 @@
 
 	  let camera = new THREE.PerspectiveCamera( 50,
 	  	window.innerWidth / window.innerHeight , 0.1, 1000 );
-	  camera.position.z = 100;
+
 
 		// 2. light
 
@@ -484,6 +484,8 @@
 
 			// sets up all relevant controls afterward
 	    else if(file_handler.all_loaded() && !control_handler.all_loaded()) {
+
+				camera.position.z = file_handler.get_bounding_sphere().radius;
 
 	      plane_control = new PlaneController(plane_forms, plane_sliders,
 	                                          file_handler.get_alpha_attribute(),
