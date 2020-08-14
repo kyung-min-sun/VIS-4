@@ -9,7 +9,9 @@ function code_to_char (utf_code) {
 function slice_arr_buff(arr_buff, start, end) {
   let slice = "";
   for(let pos = start; pos < end; ++pos) {
-    slice += code_to_char(arr_buff[pos]);
+    if(arr_buff[pos] < 128) {
+      slice += code_to_char(arr_buff[pos]);
+    }
   }
   return slice;
 };
@@ -48,13 +50,12 @@ class PTLoader {
         ++curr_pos;
      }
 
-     if(char_arr[char_arr.length - 1] == 0) {char_arr.push(0);}
-
       // if it's empty, then return empty geometry
   		if(char_arr.length == 0) { return geometry; }
 
       // if the last entry is empty, then pop
-  		if(char_arr[char_arr.length - 1] == "") {char_arr.pop();}
+  		if(char_arr[char_arr.length - 1] == "" &&
+        char_arr.length%3 != 0) {char_arr.pop();}
 
       // initialize position attribute with this
       let vertices = new Float32Array(char_arr);
