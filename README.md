@@ -24,7 +24,7 @@ This file should be just one row -- a vector with timestamps in seconds marking 
 VIS-4 supports files under 1GB. Files beyond the memory limit may fail to render. 
 
 ## Getting Started
-1. Open the website hosted <a href="https://kevinsun127.github.io/test_site/" target="_blank">here</a>.
+1. Open the website hosted <a href="https://kevinsun127.github.io/VIS-4/" target="_blank">here</a>.
 2. Upload geometry file (.stl or .pt)
 3. Upload frame sequence file (.frm)
 
